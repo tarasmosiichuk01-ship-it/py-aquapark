@@ -30,7 +30,10 @@ class Visitor:
 
 
 class SlideLimitationValidator(ABC):
-    pass
+    def __init__(self, age: int, weight: int, height: int) -> None:
+        self.age = age
+        self.weight = weight
+        self.height = height
 
 
 class ChildrenSlideLimitationValidator(SlideLimitationValidator):
@@ -57,10 +60,7 @@ class Slide:
 
     def can_access(self, visitor: Visitor) -> bool:
         try:
-            limitation_instance = self.limitation_class()
-            limitation_instance.age = visitor.age
-            limitation_instance.height = visitor.height
-            limitation_instance.weight = visitor.weight
+            self.limitation_class(visitor.age, visitor.weight, visitor.height)
             return True
         except (TypeError, ValueError):
             return False
